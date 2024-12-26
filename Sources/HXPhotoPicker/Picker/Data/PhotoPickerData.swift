@@ -302,7 +302,13 @@ open class PhotoPickerData {
                     with: text,
                     delay: 1.5,
                     animated: true,
-                    addedTo: UIViewController.topViewController?.navigationController?.view
+                    addedTo: { () -> UINavigationController? in
+                        if let photoSplitViewController = UIViewController.topViewController as? PhotoSplitViewController {
+                            return photoSplitViewController.photoController
+                        } else {
+                            return UIViewController.topViewController?.navigationController
+                        }
+                    }()?.view
                 )
             }
         }
